@@ -15,6 +15,7 @@
         </form>
         <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
     </div>
+    
     <script>
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
@@ -26,13 +27,22 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
+
             const result = await res.json();
-            if(result.token) {
+
+            if(res.ok && result.token) {
+                // GUARDAR DATOS CLAVE
                 localStorage.setItem('token', result.token);
+                // Guardamos el nivel (admin/usuario) que devuelve el servidor
+                localStorage.setItem('nivelUsuario', result.nivel); 
+                
                 alert("Login exitoso");
+
+                // REDIRIGIR A LA GESTIÓN DE PRODUCTOS
+                window.location.href = 'productos.html';
     
             } else {
-                alert(result.error);
+                alert(result.error || "Credenciales incorrectas");
             }
         };
     </script>
