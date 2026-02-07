@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - LinStore</title>
+    <link rel="stylesheet" href="/css/carrito.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/productos" class="nav-brand">
+                <i class="fa-solid fa-dragon"></i>
+                <span>LinStore</span>
+            </a>
+            
+            <div class="nav-search">
+                <input type="text" placeholder="Buscar producto..." id="searchInput">
+                <button id="searchButton"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="/carrito" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCounter">0</span>
+                </a>
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuario</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="cerrarSesion()">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <div class="main-container">
+        <!-- Contenido Principal -->
+        <main class="cart-content">
+            <!-- Header del Carrito -->
+            <div class="cart-header">
+                <h1><i class="fas fa-shopping-cart"></i> Mi Carrito</h1>
+                <p id="itemsCount">0 productos en tu carrito</p>
+            </div>
+
+            <!-- Estado del Carrito -->
+            <div id="carritoStatus" class="cart-status">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+                <p>Cargando tu carrito...</p>
+            </div>
+            
+            <!-- Carrito Vacío -->
+            <div id="carritoVacio" class="empty-cart" style="display: none;">
+                <div class="empty-state">
+                    <i class="fas fa-shopping-cart fa-3x"></i>
+                    <h2>Tu carrito está vacío</h2>
+                    <p>¡Añade algunos productos para comenzar a comprar!</p>
+                    <button onclick="window.location.href='/productos'" class="btn btn-primary">
+                        <i class="fas fa-store"></i> Ver Productos
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Carrito con Productos -->
+            <div id="carritoItems" style="display: none;">
+                <div class="cart-layout">
+                    <div class="cart-products-section">
+                        <h2 class="section-title">Productos Seleccionados</h2>
+                        <div id="listaCarrito" class="cart-products-list">
+                        </div>
+                        
+                        <!-- Acciones del Carrito -->
+                        <div class="cart-actions">
+                            <button onclick="window.location.href='/productos'" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Continuar Comprando
+                            </button>
+                            <button onclick="vaciarCarrito()" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Vaciar Carrito
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Resumen del Pedido -->
+                    <aside class="cart-summary-sidebar">
+                        <div class="summary-card">
+                            <h3><i class="fas fa-receipt"></i> Resumen del Pedido</h3>
+                            
+                            <div class="summary-details">
+                                <div class="summary-row">
+                                    <span>Subtotal:</span>
+                                    <span>$<span id="subtotal">0.00</span></span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Envío:</span>
+                                    <span>$<span id="envio">5.00</span></span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Descuento:</span>
+                                    <span>-$<span id="descuento">0.00</span></span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span><strong>Total:</strong></span>
+                                    <span><strong>$<span id="total">0.00</span></strong></span>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-actions">
+                                <button onclick="procesarPago()" class="btn btn-success btn-block">
+                                    <i class="fas fa-credit-card"></i> Proceder al Pago
+                                </button>
+                            </div>
+                            
+                            <div class="secure-payment">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Pago 100% seguro · Protegido por SSL</span>
+                            </div>
+                        </div>
+                        
+                        <div class="user-info-card">
+                            <h4><i class="fas fa-user"></i> Información del Usuario</h4>
+                            <div class="user-details">
+                                <p><strong>Nombre:</strong> <span id="userNameDisplay"></span></p>
+                                <p><strong>Email:</strong> <span id="userEmailDisplay"></span></p>
+                                <p><strong>Tipo:</strong> <span id="userLevelDisplay"></span></p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="/js/carrito.js"></script>
+</body>
+</html>

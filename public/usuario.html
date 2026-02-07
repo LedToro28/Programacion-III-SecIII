@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionStore - Productos</title>
+    <link rel="stylesheet" href="/css/usuario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/usuario" class="nav-brand">
+                <i class="fas fa-tshirt"></i>
+                <span>FashionStore</span>
+            </a>
+            
+            <div class="nav-search">
+                <input type="text" placeholder="Buscar productos..." id="searchInput">
+                <button onclick="buscarProducto()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="nav-actions">
+                <!-- Carrito -->
+                <a href="/carrito" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCounter">0</span>
+                </a>
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Usuario</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="cerrarSesion()">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <div class="main-container">
+        <!-- Sidebar de Categorías -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-filter"></i> Categorías</h3>
+            </div>
+            <div class="categories">
+                <button class="category-btn active" onclick="filtrarCategoria('todos')">
+                    <i class="fas fa-th-large"></i> Todos los Productos
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('camisas')">
+                    <i class="fas fa-tshirt"></i> Camisas
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('pantalones')">
+                    <i class="fas fa-vest"></i> Pantalones
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('zapatos')">
+                    <i class="fas fa-shoe-prints"></i> Zapatos
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('hoodies')">
+                    <i class="fas fa-hoodie"></i> Hoodies
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('accesorios')">
+                    <i class="fas fa-glasses"></i> Accesorios
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="content">
+            <!-- Header para Usuario Normal -->
+            <div class="content-header">
+                <h1>Nuestra Colección</h1>
+                <div class="stats">
+                    <div class="stat">
+                        <i class="fas fa-box-open"></i>
+                        <span id="totalProducts">0</span> Productos
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-tags"></i>
+                        <span id="activeCategories">6</span> Categorías
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secciones de Productos por Categoría -->
+            <section id="todos" class="category-section active">
+                <div class="section-header">
+                    <h2 class="section-title">Todos los Productos</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="productCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="productosGrid">
+                    <!-- Los productos se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="camisas" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-tshirt"></i> Camisas</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="camisasCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="camisasGrid">
+                    <!-- Camisas se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="pantalones" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-vest"></i> Pantalones</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="pantalonesCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="pantalonesGrid">
+                    <!-- Pantalones se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="zapatos" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-shoe-prints"></i> Zapatos</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="zapatosCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="zapatosGrid">
+                    <!-- Zapatos se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="hoodies" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-hoodie"></i> Hoodies</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="hoodiesCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="hoodiesGrid">
+                    <!-- Hoodies se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="accesorios" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-glasses"></i> Accesorios</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="accesoriosCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="accesoriosGrid">
+                    <!-- Accesorios se cargarán aquí -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="/js/usuario.js"></script>
+</body>
+</html>

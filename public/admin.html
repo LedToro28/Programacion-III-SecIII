@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinStore - Panel de Administración</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/admin" class="nav-brand">
+                <i class="fa-solid fa-dragon"></i>
+                <span>LinStore Admin</span>
+            </a>
+            
+            <div class="nav-actions">
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <i class="fas fa-user-shield"></i>
+                        <span id="userName">Administrador</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="cerrarSesion()">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal -->
+    <div class="main-container">
+        <!-- Sidebar de Categorías -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-filter"></i> Categorías</h3>
+            </div>
+            <div class="categories">
+                <button class="category-btn active" onclick="filtrarCategoria('todos')">
+                    <i class="fas fa-th-large"></i> Todos los Productos
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('camisas')">
+                    <i class="fas fa-tshirt"></i> Camisas
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('pantalones')">
+                    <i class="fas fa-vest"></i> Pantalones
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('zapatos')">
+                    <i class="fas fa-shoe-prints"></i> Zapatos
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('hoodies')">
+                    <i class="fas fa-hoodie"></i> Hoodies
+                </button>
+                <button class="category-btn" onclick="filtrarCategoria('accesorios')">
+                    <i class="fas fa-glasses"></i> Accesorios
+                </button>
+            </div>
+            
+            <!-- Panel Admin -->
+            <div class="admin-section">
+                <h4><i class="fas fa-user-shield"></i> Panel Administrador</h4>
+                <div class="admin-actions">
+                    <button class="admin-btn active" onclick="mostrarModalProducto()">
+                        <i class="fas fa-plus-circle"></i> Nuevo Producto
+                    </button>
+                </div>
+                
+                <div class="admin-stats"> 
+                    <div class="stat-item">   
+                        <span id="totalProductsAdmin"></span>
+                    </div>
+                    <div class="stat-item">
+                        <span id="totalCategories"></span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="content">
+            <!-- Barra de Herramientas Admin -->
+            <div class="admin-toolbar">
+                <div class="toolbar-actions">
+                    <div class="toolbar-search">
+                        <input type="text" placeholder="Buscar producto..." id="adminSearch">
+                        <button onclick="buscarProductoAdmin()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Admin -->
+            <div class="admin-header">
+                <div class="header-left">
+                    <h1>Panel de Administración</h1>
+                    <p class="admin-subtitle">Gestión completa de productos y categorías</p>
+                </div>
+            </div>
+
+            <!-- Secciones de Productos por Categoría -->
+            <section id="todos" class="category-section active">
+                <div class="section-header">
+                    <h2 class="section-title">Todos los Productos</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="productCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="productosGrid">
+                    <!-- Los productos se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="camisas" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-tshirt"></i> Camisas</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="camisasCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="camisasGrid">
+                    <!-- Camisas se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="pantalones" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-vest"></i> Pantalones</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="pantalonesCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="pantalonesGrid">
+                    <!-- Pantalones se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="zapatos" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-shoe-prints"></i> Zapatos</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="zapatosCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="zapatosGrid">
+                    <!-- Zapatos se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="hoodies" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-hoodie"></i> Hoodies</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="hoodiesCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="hoodiesGrid">
+                    <!-- Hoodies se cargarán aquí -->
+                </div>
+            </section>
+
+            <section id="accesorios" class="category-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-glasses"></i> Accesorios</h2>
+                    <div class="section-actions">
+                        <span class="product-count" id="accesoriosCount">0 productos</span>
+                    </div>
+                </div>
+                <div class="products-grid" id="accesoriosGrid">
+                    <!-- Accesorios se cargarán aquí -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para nuevo producto (Admin) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Nuevo Producto</h3>
+                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre"><i class="fas fa-tag"></i> Nombre</label>
+                            <input type="text" id="nombre" placeholder="Ej: Camisa de algodón" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="codigo"><i class="fas fa-barcode"></i> Código</label>
+                            <input type="text" id="codigo" placeholder="Ej: CAM-001" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precio"><i class="fas fa-dollar-sign"></i> Precio</label>
+                            <input type="number" id="precio" step="0.01" min="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria"><i class="fas fa-filter"></i> Categoría</label>
+                            <select id="categoria" required>
+                                <option value="camisas">Camisas</option>
+                                <option value="pantalones">Pantalones</option>
+                                <option value="zapatos">Zapatos</option>
+                                <option value="hoodies">Hoodies</option>
+                                <option value="accesorios">Accesorios</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imagen_url"><i class="fas fa-image"></i> URL de la Imagen</label>
+                        <input type="url" id="imagen_url" placeholder="https://ejemplo.com/imagen.jpg" required>
+                        <small class="helper-text">Usa una URL de imagen de internet</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descripcion"><i class="fas fa-align-left"></i> Descripción</label>
+                        <textarea id="descripcion" rows="3" placeholder="Describe el producto..." required></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

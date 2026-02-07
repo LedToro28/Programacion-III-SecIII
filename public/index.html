@@ -2,49 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - E-commerce</title>
-    <link rel="stylesheet" href="/style/style.css">
+    <title>Login - LinStore</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <div class="form-container">
         <h2>Iniciar Sesión</h2>
         <form id="loginForm">
             <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
             <button type="submit">Entrar</button>
+            
         </form>
         <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
     </div>
     
-    <script>
-        document.getElementById('loginForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-
-            const result = await res.json();
-
-            if(res.ok && result.token) {
-                // GUARDAR DATOS CLAVE
-                localStorage.setItem('token', result.token);
-                // Guardamos el nivel (admin/usuario) que devuelve el servidor
-                localStorage.setItem('nivelUsuario', result.nivel); 
-                
-                alert("Login exitoso");
-
-                // REDIRIGIR A LA GESTIÓN DE PRODUCTOS
-                window.location.href = 'productos.html';
-    
-            } else {
-                alert(result.error || "Credenciales incorrectas");
-            }
-        };
-    </script>
+    <script type="module" src="/js/login.js"></script>
 </body>
 </html>
